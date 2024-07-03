@@ -7,7 +7,13 @@ const Register = () => {
     try {
       const response = await register({ nombre, apellido, email, password, telefono, isMedico });
       console.log('Registro exitoso:', response);
-      window.location.href = '/auth/login';
+
+      const token = response.token;
+      const role = isMedico ? 'MEDICO' : 'PACIENTE';
+      localStorage.setItem('token', token);
+      localStorage.setItem('role', role);
+
+      return { role };  // Devolver el rol para manejar la redirección
     } catch (error) {
       console.error('Error al registrar:', error.response || error.message || error);
     }

@@ -7,11 +7,12 @@ const Login = () => {
     try {
       const response = await login(email, password);
       const token = response.token;
-      localStorage.setItem('token', token);
-      localStorage.setItem('role', response.role);
+      const role = response.role;
 
-      // Redirigir según el rol
-      window.location.href = '/auth/login';
+      localStorage.setItem('token', token);
+      localStorage.setItem('role', role);
+
+      return { role };  // Devolver el rol para manejar la redirección
     } catch (error) {
       console.error('Error al iniciar sesión:', error.response || error.message || error);
     }

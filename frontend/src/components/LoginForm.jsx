@@ -4,9 +4,17 @@ const LoginForm = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onLogin(email, password);
+    const response = await onLogin(email, password);
+
+    // Redirigir según el rol
+    const role = response.role;
+    if (role === 'PACIENTE') {
+      window.location.href = '/auth/Dashboard/Paciente/Cuenta';
+    } else if (role === 'MEDICO') {
+      window.location.href = '/auth/Dashboard/Medico/Cuenta';
+    }
   };
 
   return (

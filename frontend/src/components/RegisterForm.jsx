@@ -8,9 +8,17 @@ const RegisterForm = ({ onRegister }) => {
   const [telefono, setTelefono] = useState('');
   const [isMedico, setIsMedico] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onRegister(nombre, apellido, email, password, telefono, isMedico);
+    const response = await onRegister(nombre, apellido, email, password, telefono, isMedico);
+
+    // Redirigir según el rol
+    const role = isMedico ? 'MEDICO' : 'PACIENTE';
+    if (role === 'PACIENTE') {
+      window.location.href = '/auth/Dashboard/Paciente/Cuenta';
+    } else if (role === 'MEDICO') {
+      window.location.href = '/auth/Dashboard/Medico/Cuenta';
+    }
   };
 
   return (
