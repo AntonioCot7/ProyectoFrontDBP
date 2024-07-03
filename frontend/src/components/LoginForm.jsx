@@ -10,9 +10,9 @@ const LoginForm = ({ onLogin }) => {
 
     // Redirigir según el rol
     const role = response.role;
-    if (role === 'PACIENTE') {
+    if (role === 'ROLE_PACIENTE') {
       window.location.href = '/auth/Dashboard/Paciente/Cuenta';
-    } else if (role === 'MEDICO') {
+    } else if (role === 'ROLE_MEDICO') {
       window.location.href = '/auth/Dashboard/Medico/Cuenta';
     }
   };

@@ -1,17 +1,20 @@
 import React from 'react';
 import LoginForm from '../components/LoginForm';
 import { login } from '../services/api';
+import { jwtDecode } from 'jwt-decode';
 
 const Login = () => {
   const handleLogin = async (email, password) => {
     try {
       const response = await login(email, password);
       const token = response.token;
-      const role = response.role;
-
+      console.log(response);
       localStorage.setItem('token', token);
-      localStorage.setItem('role', role);
 
+      const decodedToken = jwtDecode(token);
+      const role = decodedToken.role;
+      console.log(role);
+      localStorage.setItem('role', role);
       return { role };  // Devolver el rol para manejar la redirección
     } catch (error) {
       console.error('Error al iniciar sesión:', error.response || error.message || error);
