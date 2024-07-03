@@ -8,7 +8,8 @@ module.exports = {
       colors: {
         customBlue: '#2670BA',
         customGreen: '#379333',
-        customGrey: '#D9D9D9'
+        customGrey: '#D9D9D9',
+        customSkyBlue: '#60ADAD'
       },
     },
   },
