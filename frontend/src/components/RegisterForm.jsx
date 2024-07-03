@@ -14,77 +14,77 @@ const RegisterForm = ({ onRegister }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="nombre">Nombre</label>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <label className="block text-sm font-medium text-gray-700" htmlFor="nombre">Nombre:</label>
         <input
           type="text"
           id="nombre"
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500"
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}
           required
         />
       </div>
-      <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="apellido">Apellido</label>
+      <div>
+        <label className="block text-sm font-medium text-gray-700" htmlFor="apellido">Apellidos:</label>
         <input
           type="text"
           id="apellido"
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500"
           value={apellido}
           onChange={(e) => setApellido(e.target.value)}
           required
         />
       </div>
-      <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="email">Email</label>
+      <div>
+        <label className="block text-sm font-medium text-gray-700" htmlFor="email">Correo:</label>
         <input
           type="email"
           id="email"
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
       </div>
-      <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="password">Password</label>
+      <div>
+        <label className="block text-sm font-medium text-gray-700" htmlFor="password">Contraseña:</label>
         <input
           type="password"
           id="password"
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
       </div>
-      <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="telefono">Teléfono</label>
+      <div>
+        <label className="block text-sm font-medium text-gray-700" htmlFor="telefono">Teléfono:</label>
         <input
           type="text"
           id="telefono"
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500"
           value={telefono}
           onChange={(e) => setTelefono(e.target.value)}
           required
         />
       </div>
-      <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="isMedico">¿Es Médico?</label>
+      <div className="flex items-center mb-4">
         <input
           type="checkbox"
           id="isMedico"
-          className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+          className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
           checked={isMedico}
           onChange={(e) => setIsMedico(e.target.checked)}
         />
+        <label className="ml-2 block text-sm font-medium text-gray-700" htmlFor="isMedico">¿Eres Médico?</label>
       </div>
       <button
         type="submit"
-        className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 rounded-lg hover:bg-gradient-to-l focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200"
+        className="w-full bg-green-600 text-white py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 hover:bg-green-700 transition duration-200"
       >
-        Register
+        Registrarse
       </button>
     </form>
   );
