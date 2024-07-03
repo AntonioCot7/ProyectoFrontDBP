@@ -24,10 +24,10 @@ const Sidebar = ({ role, bgColor, textColor, hoverColor }) => {
             <Link to={`/auth/Dashboard/${role}/Cuenta`} className={`block py-2.5 px-4 rounded transition duration-200 ${hoverColor}`}>
               Cuenta
             </Link>
-            <Link to={`/auth/Dashboard/${role}/Tratamientos`} className={`block py-2.5 px-4 rounded transition duration-200 ${hoverColor}`}>
+            <Link to={`/Dashboard/${role}/Tratamientos`} className={`block py-2.5 px-4 rounded transition duration-200 ${hoverColor}`}>
               Tratamientos
             </Link>
-            <Link to={`/auth/Dashboard/${role}/HistorialMedico`} className={`block py-2.5 px-4 rounded transition duration-200 ${hoverColor}`}>
+            <Link to={`/Dashboard/${role}/Historial`} className={`block py-2.5 px-4 rounded transition duration-200 ${hoverColor}`}>
               Historial Médico
             </Link>
             <Link to={`/auth/Dashboard/${role}/ListaDeMedicos`} className={`block py-2.5 px-4 rounded transition duration-200 ${hoverColor}`}>

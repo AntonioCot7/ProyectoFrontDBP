@@ -40,7 +40,7 @@ const PacienteCuenta = () => {
                                 <div className="flex items-center">
                                     <img src={UserIcon} alt="Paciente" className="h-20 w-20 mr-4" />
                                     <div>
-                                        <p><strong>Nombre:</strong> {userInfo?.name || 'John Doe'}</p>
+                                        <p><strong>Nombre:</strong> {userInfo?.nombre || 'John Doe'}</p>
                                         <p><strong>Email:</strong> {userInfo?.email || 'john.doe@gmail.com'}</p>
                                         <p><strong>Teléfono:</strong> {userInfo?.phone || '999 999 999'}</p>
                                         <p><strong>Edad:</strong> {userInfo?.age || '18 años'}</p>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://54.236.12.229:8080';
+const API_BASE_URL = 'http://localhost:8080';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -32,6 +32,39 @@ export const getUserRole = async (token) => {
     return response.data;
   } catch (error) {
     console.error('Failed to fetch user role:', error);
+    throw error;
+  }
+};
+
+export const getPacienteInfo = async(token) => {
+  setAuthToken(token);
+  try {
+    const response = await api.get(`/paciente/me`);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch paciente info:', error);
+    throw error;
+  }
+};
+
+export const getTratamientos = async (pacienteId, token) => {
+  setAuthToken(token);
+  try {
+    const response = await api.get(`/tratamiento/getTratamientos/${pacienteId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch tratamientos:', error);
+    throw error;
+  }
+};
+
+export const getHistorial = async (pacienteId, token) => {
+  setAuthToken(token);
+  try {
+    const response = await api.get(`/historial/paciente/${pacienteId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch historial médico:', error);
     throw error;
   }
 };

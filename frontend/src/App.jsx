@@ -6,6 +6,8 @@ import Register from './pages/Register';
 import Inicio from './pages/Inicio';
 import PacienteCuenta from './pages/PacienteCuenta';
 import MedicoCuenta from './pages/MedicoCuenta';
+import PacienteTratamientos from './pages/PacienteTratamientos';
+import PacienteHistorial from './pages/PacienteHistorial';
 import './index.css';
 
 function App() {
@@ -19,6 +21,8 @@ function App() {
           <Route path="/auth/inicio" element={<Inicio />} />
           <Route path="/auth/Dashboard/Paciente/Cuenta" element={<PacienteCuenta />} />
           <Route path="/auth/Dashboard/Medico/Cuenta" element={<MedicoCuenta />} />
+          <Route path="/Dashboard/Paciente/Tratamientos" element={<PacienteTratamientos />} />
+          <Route path="/Dashboard/Paciente/Historial" element={<PacienteHistorial />} />
         </Routes>
       </div>
     </Router>
