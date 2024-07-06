@@ -97,12 +97,17 @@ export const deletePaciente = async (id, token) => {
   }
 };
 
-
-
-
-
-
-
+// Actualizar información de un médico
+export const updatePacienteInfo = async (id, pacienteInfoDTO, token) => {
+  setAuthToken(token);
+  try {
+    const response = await api.patch(`/paciente/${id}`, pacienteInfoDTO);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to update medico info:', error);
+    throw error;
+  }
+};
 
 // Obtener tratamientos
 export const getTratamientos = async (pacienteId, token) => {

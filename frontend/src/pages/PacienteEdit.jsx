@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getPacienteInfo, deletePaciente } from '../services/api';
+import { getPacienteInfo, updatePacienteInfo, deletePaciente } from '../services/api';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import UserIcon from '../assets/UserIcon.png'; // Asegúrate de tener esta imagen en la carpeta correcta
@@ -36,6 +36,16 @@ const PacienteEdit = () => {
       ...prevState,
       [name]: value,
     }));
+  };
+
+  const handleUpdate = async () => {
+    try {
+      await updatePacienteInfo(userInfo.id, userInfo, token);
+      alert('Perfil actualizado correctamente');
+    } catch (error) {
+      console.error('Error actualizando el perfil:', error);
+      alert('Error actualizando el perfil');
+    }
   };
 
   const handleDelete = async () => {
@@ -92,6 +102,7 @@ const PacienteEdit = () => {
                   className="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
                 <button
+                  onClick={handleUpdate}
                   className="w-full bg-customGreen text-white py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 hover:bg-green-700 transition duration-200"
                 >
                   Actualizar
