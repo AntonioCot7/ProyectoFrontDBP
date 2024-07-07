@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { getTratamientos, deleteTratamiento, getPacientes, addTratamiento, getMedicoInfo } from '../services/api';
+import { getPacientes, addHistorial, getHistorial } from '../services/api';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import Pencil from '../assets/Pencil.png';
-import medicine from '../assets/medicine.png';
-import Trash from '../assets/Trash.png';
+import Clock from '../assets/Clock.png';
 import { useNavigate } from 'react-router-dom';
+import { format } from 'date-fns';
+import es from 'date-fns/locale/es';
 
 const MedicoHistorial = () => {
-    const [userInfo, setUserInfo] = useState(null);
-    const [tratamientos, setTratamientos] = useState([]);
+    const locale = es;
+    const [historiales, setHistoriales] = useState([]);
     const [pacientes, setPacientes] = useState([]);
     const [selectedPaciente, setSelectedPaciente] = useState('');
     const [historialInfo, setHistorialInfo] = useState({
-        nombreTratamiento: '',
+        fecha: '',
         descripcion: ''
     });
     const navigate = useNavigate();
@@ -68,64 +69,63 @@ const MedicoHistorial = () => {
 
     useEffect(() => {
         if (selectedPaciente) {
-            const fetchTratamientos = async () => {
+            const fetchHistoriales = async () => {
                 try {
                     const token = localStorage.getItem('token');
-                    const tratamientosData = await getTratamientos(parseInt(selectedPaciente), token);
-                    setTratamientos(tratamientosData);
+                    const historialesData = await getHistorial(parseInt(selectedPaciente), token);
+                    setHistoriales(historialesData);
                 } catch (error) {
                     console.error('Error fetching tratamientos:', error);
                 }
             };
 
-            fetchTratamientos();
+            fetchHistoriales();
         }
     }, [selectedPaciente]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setTratamientoInfo((prevState) => ({
+        setHistorialInfo((prevState) => ({
             ...prevState,
             [name]: value,
         }));
     };
 
+    const handleDateChange = (e) => {
+        const value = e.target.value;
+        setHistorialInfo((prevState) => ({
+            ...prevState,
+            fecha: value,
+        }));
+    };
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('token');
-            const tratamientoDTO = {
+            const localDate = new Date(historialInfo.fecha);
+            const utcDate = new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000).toISOString();
+            const historialDTO = {
                 paciente_id: parseInt(selectedPaciente),
-                ...tratamientoInfo
+                fecha: utcDate.replace('Z', ''),
+                ...historialInfo
             };
-            console.log(tratamientoDTO)
-            await addTratamiento(tratamientoDTO, token);
-            alert('Tratamiento añadido correctamente');
+            console.log(historialDTO)
+            await addHistorial(historialDTO, token);
+            alert('Historial añadido correctamente');
             // Actualizar la lista de tratamientos
-            const tratamientosData = await getTratamientos(parseInt(selectedPaciente), token);
-            setTratamientos(tratamientosData);
+            const historialesData = await getHistorial(parseInt(selectedPaciente), token);
+            setHistoriales(historialesData);
         } catch (error) {
-            console.error('Error adding tratamiento:', error);
-            alert('Error añadiendo tratamiento');
-        }
-    };
-
-    const handleDelete = async(id) => {
-        try {
-            const token = localStorage.getItem('token');
-            await deleteTratamiento(id, token);
-            alert('Tratamiento eliminado correctamente');
-            // Actualizar la lista de tratamientos
-            const tratamientosData = await getTratamientos(parseInt(selectedPaciente), token);
-            setTratamientos(tratamientosData);
-        } catch (error) {
-          console.error('Error eliminando tratamiento:', error);
+            console.error('Error adding historial:', error);
+            alert('Error añadiendo historial');
         }
     };
 
     const handleEdit = (id) => {
-        navigate(`/auth/Dashboard/Medico/Tratamientos/Edit/${id}`);
-      };
+        navigate(`/Dashboard/Medico/Historial/Edit/${id}`);
+    };
 
     return (
         <div>
@@ -135,7 +135,7 @@ const MedicoHistorial = () => {
                 <div className="flex-grow p-6 bg-white">
                     <div className="mt-6 bg-gray-100 p-4 rounded-lg shadow-md flex">
                         <div className="w-1/2 mr-4">
-                            <h2 className="text-2xl font-bold mb-4">Añadir Tratamientos</h2>
+                            <h2 className="text-2xl font-bold mb-4">Añadir Historial</h2>
                             <form onSubmit={handleSubmit}>
                                 <label className="block mb-2">Seleccionar Paciente:</label>
                                 <select
@@ -150,18 +150,18 @@ const MedicoHistorial = () => {
                                         </option>
                                     ))}
                                 </select>
-                                <label className="block mb-2">Nombre del Tratamiento:</label>
+                                <label className="block mb-2">Fecha de la consulta:</label>
                                 <input
-                                    type="text"
-                                    name="nombreTratamiento"
-                                    value={tratamientoInfo.nombreTratamiento}
-                                    onChange={handleInputChange}
+                                    type="datetime-local"
+                                    name="fecha"
+                                    value={(historialInfo.fecha || '').substring(0, 16)}
+                                    onChange={handleDateChange}
                                     className="w-full mb-4 p-2 border rounded"
                                 />
                                 <label className="block mb-2">Descripción:</label>
                                 <textarea
                                     name="descripcion"
-                                    value={tratamientoInfo.descripcion}
+                                    value={historialInfo.descripcion}
                                     onChange={handleInputChange}
                                     className="w-full mb-4 p-2 border rounded"
                                     rows="10"
@@ -172,30 +172,22 @@ const MedicoHistorial = () => {
                             </form>
                         </div>
                         <div className="w-1/2">
-                            <h2 className="text-2xl font-bold mb-4">Tratamientos</h2>
-                            {tratamientos.length > 0 ? (
-                                tratamientos.map((tratamiento) => (
-                                    <div key={tratamiento.id} className="flex bg-black text-white p-4 rounded-lg shadow-md mb-4 items-start">
-                                        <img src={medicine} alt="Tratamiento" className="h-12 w-12 mr-4" />
+                            <h2 className="text-2xl font-bold mb-4">Historial Médico</h2>
+                            {historiales.length > 0 ? (
+                                historiales.map((historial) => (
+                                    <div key={historial.id} className="flex bg-black text-white p-4 rounded-lg shadow-md mb-4 items-start">
+                                        <img src={Clock} alt="Tratamiento" className="h-12 w-12 mr-4" />
                                         <div className="flex-grow">
-                                            <h3 className="text-lg font-bold">Nombre: {tratamiento.nombreTratamiento}</h3>
+                                            <h3 className="text-lg font-bold">Fecha: {format(new Date(historial.fecha), 'dd MMMM, yyyy h:mm a', { locale })}</h3>
                                             <p><strong>Descripción:</strong></p>
-                                            <p className="text-sm whitespace-pre-wrap">{tratamiento.descripcion}</p>
+                                            <p className="text-sm whitespace-pre-wrap">{historial.descripcion}</p>
                                         </div>
                                         <div>
-                                        <button onClick={() => handleEdit(tratamiento.id)} className="bg-customGreen text-white px-4 py-2 rounded-lg">
+                                        <button onClick={() => handleEdit(historial.id)} className="bg-customGreen text-white px-4 py-2 rounded-lg">
                                             <img src={Pencil} alt="Editar" className="h-4 w-4 mr-2 inline" />
                                             Editar
                                         </button>
                                         </div>
-                                        <p></p>
-                                        <div>
-                                        <button onClick={() => handleDelete(tratamiento.id)} className="bg-customGreen text-white px-4 py-2 rounded-lg">
-                                            <img src={Trash} alt="Eliminar" className="h-4 w-4 mr-2 inline" />
-                                            Eliminar
-                                        </button>
-                                        </div>
-                                        
                                     </div>
                                 ))
                             ) : (

@@ -4,7 +4,7 @@ import HamburgerIcon from '../assets/HamburgerIcon.png'; // Asegúrate de tener 
 
 const Sidebar = ({ role, bgColor, textColor, hoverColor }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  
+    const userRole = localStorage.getItem('role');
     const toggleSidebar = () => {
       setIsSidebarOpen(!isSidebarOpen);
     };
@@ -30,12 +30,23 @@ const Sidebar = ({ role, bgColor, textColor, hoverColor }) => {
             <Link to={`/Dashboard/${role}/Historial`} className={`block py-2.5 px-4 rounded transition duration-200 ${hoverColor}`}>
               Historial Médico
             </Link>
-            <Link to={`/auth/Dashboard/${role}/ListaDeMedicos`} className={`block py-2.5 px-4 rounded transition duration-200 ${hoverColor}`}>
-              Lista de Médicos
+            {userRole == 'ROLE_PACIENTE'? (
+              <>
+                <Link to={`/auth/Dashboard/${role}/ListaDeMedicos`} className={`block py-2.5 px-4 rounded transition duration-200 ${hoverColor}`}>
+                Lista de Médicos
+                </Link>
+                <Link to={`/auth/Dashboard/${role}/MisMedicos`} className={`block py-2.5 px-4 rounded transition duration-200 ${hoverColor}`}>
+                  Mis Medicos
+                </Link>
+              </>
+            ):(
+            <Link to={`/Dashboard/${role}/MisPacientes`} className={`block py-2.5 px-4 rounded transition duration-200 ${hoverColor}`}>
+              Mis Pacientes
             </Link>
-            <Link to={`/auth/Dashboard/${role}/MisMedicos`} className={`block py-2.5 px-4 rounded transition duration-200 ${hoverColor}`}>
-              Mis Medicos
-            </Link>
+
+            )}
+            
+            
           </nav>
         )}
       </div>
