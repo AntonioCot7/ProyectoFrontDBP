@@ -18,7 +18,7 @@ const Sidebar = ({ role, bgColor, textColor, hoverColor }) => {
         </div>
         {isSidebarOpen && (
           <nav className="mt-1">
-            <Link to="/auth/inicio" className={`block py-2.5 px-4 rounded transition duration-200 ${hoverColor}`}>
+            <Link to="/inicio" className={`block py-2.5 px-4 rounded transition duration-200 ${hoverColor}`}>
               Inicio
             </Link>
             <Link to={`/auth/Dashboard/${role}/Cuenta`} className={`block py-2.5 px-4 rounded transition duration-200 ${hoverColor}`}>
