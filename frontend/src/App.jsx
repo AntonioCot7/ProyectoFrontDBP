@@ -12,6 +12,9 @@ import PacienteTratamientos from './pages/PacienteTratamientos';
 import MedicoTratamientosEdit from './pages/MedicoTratamientosEdit';
 import PacienteHistorial from './pages/PacienteHistorial';
 import MedicoTratamientos from './pages/MedicoTratamientos';
+import ListaDeMedicos from './pages/ListaDeMedicos';
+import MisMedicos from './pages/MisMedicos';
+import ErrorPage from './pages/ErrorPage';
 import './index.css';
 
 function App() {
@@ -21,8 +24,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Inicio />} />
           <Route path="/inicio" element={<Inicio />} />
-          <Route path="/auth/login" element={<Login />} />
-          <Route path="/auth/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/auth/Dashboard/Paciente/Cuenta" element={<PacienteCuenta />} />
           <Route path="/auth/Dashboard/Medico/Cuenta" element={<MedicoCuenta />} />
           <Route path="/Dashboard/Paciente/Tratamientos" element={<PacienteTratamientos />} />
@@ -33,6 +36,10 @@ function App() {
           <Route path="/auth/Dashboard/Paciente/Tratamientos" element={<PacienteTratamientos />} />
           <Route path="/auth/Dashboard/Medico/Tratamientos/Edit/:id" element={<MedicoTratamientosEdit />} />
           <Route path="/auth/Dashboard/Paciente/HistorialMedico" element={<PacienteHistorial />} />
+          <Route path="/auth/Dashboard/Paciente/ListaDeMedicos" element={<ListaDeMedicos/>} />
+          <Route path ="/auth/Dashboard/Paciente/MisMedicos" element={<MisMedicos/>} />
+          <Route path="/error" element={<ErrorPage />} />
+          <Route path="*" element={<ErrorPage errorCode="404" errorMessage="Page Not Found" />} />
         </Routes>
       </div>
     </Router>

@@ -33,6 +33,9 @@ const Sidebar = ({ role, bgColor, textColor, hoverColor }) => {
             <Link to={`/auth/Dashboard/${role}/ListaDeMedicos`} className={`block py-2.5 px-4 rounded transition duration-200 ${hoverColor}`}>
               Lista de Médicos
             </Link>
+            <Link to={`/auth/Dashboard/${role}/MisMedicos`} className={`block py-2.5 px-4 rounded transition duration-200 ${hoverColor}`}>
+              Mis Medicos
+            </Link>
           </nav>
         )}
       </div>

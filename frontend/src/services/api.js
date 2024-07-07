@@ -15,6 +15,20 @@ const setAuthToken = (token) => {
   }
 };
 
+const handleApiError = (error) => {
+  const navigate = useNavigate();
+  if (error.response) {
+    if (error.response.status === 400) {
+      navigate('/error', { state: { errorCode: 400, errorMessage: 'Bad Request' } });
+    } else {
+      navigate('/error', { state: { errorCode: error.response.status, errorMessage: error.response.data.message } });
+    }
+  } else {
+    navigate('/error', { state: { errorCode: 500, errorMessage: 'Internal Server Error' } });
+  }
+  throw error;
+};
+
 // Auth
 export const login = async (email, password) => {
   const response = await api.post('/auth/login', { email, password });
@@ -109,7 +123,7 @@ export const updatePacienteInfo = async (id, pacienteInfoDTO, token) => {
   }
 };
 
-// Obtener tratamientos
+// Obtener tratamientos del paciente
 export const getTratamientos = async (pacienteId, token) => {
   setAuthToken(token);
   try {
@@ -169,6 +183,7 @@ export const deleteTratamiento = async (id, token) => {
 };
 
 // Obtener Historial
+// Obtener Historial Medico del paciente
 export const getHistorial = async (pacienteId, token) => {
   setAuthToken(token);
   try {
@@ -188,6 +203,16 @@ export const getPacientes = async (token) => {
     return response.data;
   } catch (error) {
     console.error('Failed to fetch pacientes:', error);
+  }
+};
+// Obtener la lista de todos los medicos
+export const getMedicos = async (token) => {
+  setAuthToken(token);
+  try {
+    const response = await api.get('/medico/getMedicos');
+    return response.data;
+  } catch (error) {
+    console.error('The list of doctors could not be retrieved.', error);
     throw error;
   }
 };
@@ -205,3 +230,26 @@ export const getPacientesByMedico = async (id, token) => {
   }
 };
 */
+// Obtener los médicos asignados a paciente
+export const getMedicoByPacienteId = async (pacienteId,token) => {
+  setAuthToken(token);
+  try {
+    const response = await api.get(`/paciente/medico/${pacienteId}`);
+    return response.data;
+  } catch (error) {
+    console.error('The patient does not have an assigned doctor.', error);
+    throw error;
+  }
+};
+
+// Asignar un médico al paciente
+export const patchMedicoByPacienteId = async (medicoId,token) => {
+  setAuthToken(token);
+  try {
+    const response = await api.patch(`/paciente/addMedico/${medicoId}`);
+    return response.data;
+  } catch (error) {
+    console.error('A doctor could not be assigned to the patient.', error);
+    throw error;
+  }
+};

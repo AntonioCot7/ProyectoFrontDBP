@@ -57,7 +57,7 @@ const LoginForm = ({ onLogin }) => {
         className="w-full bg-green-600 text-white py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 hover:bg-green-700 transition duration-200"
         onClick={() => window.location.href = '/auth/register'}
       >
-        Registro
+        Registrarse
       </button>
     </form>
   );

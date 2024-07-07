@@ -5,7 +5,7 @@ const Inicio = () => {
   const navigate = useNavigate();
 
   const handleStart = () => {
-    navigate('/auth/login');
+    navigate('/login');
   };
 
   return (
