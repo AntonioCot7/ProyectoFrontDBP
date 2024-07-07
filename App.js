@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Login from './src/Login';
 import Register from './src/Register';
 import Logout from './src/Logout';
+import Paciente from './src/paciente/Paciente';
+import PacienteEdit from './src/paciente/PacienteEdit';
+import PacienteConsulta from './src/paciente/PacienteConsulta';
+import PacienteHistorial from './src/paciente/PacienteHistorial';
+import PacienteTratamientos from './src/paciente/PacienteTratamientos';
+import Medico from './src/medico/Medico';
 
 const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
 
 const AuthStack = ({ setIsLoggedIn }) => (
   <Stack.Navigator initialRouteName="Login">
@@ -18,24 +22,38 @@ const AuthStack = ({ setIsLoggedIn }) => (
   </Stack.Navigator>
 );
 
-const AppTabs = ({ setIsLoggedIn }) => (
-  <Tab.Navigator initialRouteName="Logout">
-    <Tab.Screen name="Logout">
-      {props => <Logout {...props} setIsLoggedIn={setIsLoggedIn} />}
-    </Tab.Screen>
-    {/* Puedes agregar más pantallas aquí si es necesario */}
-  </Tab.Navigator>
+const PacienteStack = () => (
+  <Stack.Navigator>
+    <Stack.Screen name="Paciente" component={Paciente} />
+    <Stack.Screen name="PacienteEdit" component={PacienteEdit} />
+    <Stack.Screen name="PacienteConsulta" component={PacienteConsulta} />
+    <Stack.Screen name="PacienteHistorial" component={PacienteHistorial} />
+    <Stack.Screen name="PacienteTratamientos" component={PacienteTratamientos} />
+    <Stack.Screen name="Logout" component={Logout} />
+  </Stack.Navigator>
+);
+
+const MedicoStack = () => (
+  <Stack.Navigator>
+    <Stack.Screen name="Medico" component={Medico} />
+    <Stack.Screen name="Logout" component={Logout} />
+  </Stack.Navigator>
 );
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [role, setRole] = useState(null);
 
   return (
     <NavigationContainer>
       {isLoggedIn ? (
-        <AppTabs setIsLoggedIn={setIsLoggedIn} />
+        role === 'ROLE_PACIENTE' ? (
+          <PacienteStack />
+        ) : (
+          <MedicoStack />
+        )
       ) : (
-        <AuthStack setIsLoggedIn={setIsLoggedIn} />
+        <AuthStack setIsLoggedIn={(status, userRole) => { setIsLoggedIn(status); setRole(userRole); }} />
       )}
     </NavigationContainer>
   );

@@ -1,12 +1,12 @@
 import axios from 'axios';
-import * as SecureStore from 'expo-secure-store';
 import jwtDecode from 'jwt-decode';
+import * as SecureStore from 'expo-secure-store';
 
-const API_BASE_URL = 'http://34.229.161.230:8080';
+const API_BASE_URL = 'http://3.84.251.135:8080';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
-}); 
+});
 
 const setAuthToken = async () => {
   const token = await SecureStore.getItemAsync('token');
@@ -19,24 +19,14 @@ const setAuthToken = async () => {
 
 // Auth
 export const login = async (email, password) => {
-  try {
-    const response = await api.post('/auth/login', { email, password });
-    await SecureStore.setItemAsync('token', response.data.token); // Almacena el token
-    return response.data;
-  } catch (error) {
-    console.error('Failed to login:', error);
-    throw error;
-  }
+  const response = await api.post('/auth/login', { email, password });
+  await SecureStore.setItemAsync('token', response.data.token);
+  return response.data;
 };
 
 export const register = async (userData) => {
-  try {
-    const response = await api.post('/auth/register', userData);
-    return response.data;
-  } catch (error) {
-    console.error('Failed to register:', error);
-    throw error;
-  }
+  const response = await api.post('/auth/register', userData);
+  return response.data;
 };
 
 export const getUserRole = async () => {
@@ -142,6 +132,18 @@ export const getHistorial = async (pacienteId) => {
     return response.data;
   } catch (error) {
     console.error('Failed to fetch historial médico:', error);
+    throw error;
+  }
+};
+
+// Obtener información del médico
+export const getMedicos = async (token) => {
+  setAuthToken(token);
+  try {
+    const response = await api.get('/medico/getMedicos');
+    return response.data;
+  } catch (error) {
+    console.error('The list of doctors could not be retrieved.', error);
     throw error;
   }
 };

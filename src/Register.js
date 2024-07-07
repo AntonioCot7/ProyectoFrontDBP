@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
-import CheckBox from 'expo-checkbox'; // Importar CheckBox desde expo-checkbox
+import CheckBox from 'expo-checkbox';
 import { register } from './api'; // Asegúrate de que la ruta de importación sea correcta
 import * as SecureStore from 'expo-secure-store';
 
@@ -18,19 +18,22 @@ const Register = ({ navigation }) => {
       console.log('Sending registration data:', userData);
 
       const response = await register(userData);
-      Alert.alert('Registro exitoso', 'Te has registrado correctamente');
+      Alert.alert(
+        'Registro exitoso',
+        'Te has registrado correctamente. Diríjase al login para iniciar sesión',
+        [
+          {
+            text: 'OK',
+            onPress: () => navigation.navigate('Login')
+          }
+        ]
+      );
       
       const token = response.token;
       const role = isMedico ? 'MEDICO' : 'PACIENTE';
       await SecureStore.setItemAsync('token', token);
       await SecureStore.setItemAsync('role', role);
       
-      // Redirigir según el rol
-      if (role === 'PACIENTE') {
-        navigation.navigate('DashboardPaciente');
-      } else if (role === 'MEDICO') {
-        navigation.navigate('DashboardMedico');
-      }
     } catch (error) {
       console.error('Error al registrarse:', error.response || error.message || error);
       Alert.alert('Error en el registro', error.response?.data?.message || 'Hubo un problema al registrarte. Intenta nuevamente.');

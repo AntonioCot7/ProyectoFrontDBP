@@ -15,7 +15,9 @@
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/stack": "^6.3.29",
     "axios": "^1.7.2",
+    "date-fns": "^3.6.0",
     "expo": "~51.0.17",
+    "expo-checkbox": "~3.0.0",
     "expo-secure-store": "~13.0.2",
     "expo-status-bar": "~1.12.1",
     "jwt-decode": "^4.0.0",
@@ -23,8 +25,7 @@
     "react-native": "^0.74.3",
     "react-native-elements": "^3.4.3",
     "react-native-paper": "^5.12.3",
-    "react-native-vector-icons": "^10.1.0",
-    "expo-checkbox": "~3.0.0"
+    "react-native-vector-icons": "^10.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

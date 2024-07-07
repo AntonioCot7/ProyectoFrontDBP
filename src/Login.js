@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
 import { login } from './api'; // Asegúrate de que la ruta sea correcta
-import jwtDecode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode'; // Importar jwt-decode correctamente
 import * as SecureStore from 'expo-secure-store';
 
 const Login = ({ navigation, setIsLoggedIn }) => {
@@ -10,6 +10,7 @@ const Login = ({ navigation, setIsLoggedIn }) => {
 
   const handleLogin = async () => {
     try {
+      console.log('Logging in with:', { email, password });
       const response = await login(email, password);
       const token = response.token;
       await SecureStore.setItemAsync('token', token);
@@ -19,11 +20,7 @@ const Login = ({ navigation, setIsLoggedIn }) => {
       await SecureStore.setItemAsync('role', role);
       
       Alert.alert('Login exitoso', 'Te has logueado correctamente');
-      if (role === 'ROLE_PACIENTE') {
-        navigation.navigate('DashboardPaciente');
-      } else if (role === 'ROLE_MEDICO') {
-        navigation.navigate('DashboardMedico');
-      }
+      setIsLoggedIn(true, role);
     } catch (error) {
       Alert.alert('Error en el login', 'Hubo un problema al iniciar sesión. Intenta nuevamente.');
       console.error('Login failed', error);
@@ -34,7 +31,7 @@ const Login = ({ navigation, setIsLoggedIn }) => {
     <View style={styles.container}>
       <Text style={styles.title}>Bienvenido a SalPÉ</Text>
       <Image source={require('../img/Logo_ODAD.png')} style={styles.logo} />
-      <Text style={styles.label}>Correo :</Text>
+      <Text style={styles.label}>Correo:</Text>
       <TextInput
         style={styles.input}
         value={email}
@@ -42,7 +39,7 @@ const Login = ({ navigation, setIsLoggedIn }) => {
         placeholder="Ingrese su correo"
         placeholderTextColor="#aaa"
       />
-      <Text style={styles.label}>Contraseña :</Text>
+      <Text style={styles.label}>Contraseña:</Text>
       <TextInput
         style={styles.input}
         value={password}
