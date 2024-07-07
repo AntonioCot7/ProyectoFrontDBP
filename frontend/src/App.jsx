@@ -10,6 +10,7 @@ import PacienteEdit from './pages/PacienteEdit';
 import MedicoEdit from './pages/MedicoEdit';
 import PacienteTratamientos from './pages/PacienteTratamientos';
 import PacienteHistorial from './pages/PacienteHistorial';
+import ListaDeMedicos from './pages/ListaDeMedicos';
 import './index.css';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="/auth/Dashboard/Medico/Cuenta/Edit" element={<MedicoEdit />} />
           <Route path="/auth/Dashboard/Paciente/Tratamientos" element={<PacienteTratamientos />} />
           <Route path="/auth/Dashboard/Paciente/HistorialMedico" element={<PacienteHistorial />} />
+          <Route path="/auth/Dashboard/Paciente/ListaDeMedicos" element={<ListaDeMedicos/>} />
         </Routes>
       </div>
     </Router>

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 
-const API_BASE_URL = 'http://34.229.161.230:8080';
+const API_BASE_URL = 'http://3.84.251.135:8080';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -129,6 +129,18 @@ export const getHistorial = async (pacienteId, token) => {
     return response.data;
   } catch (error) {
     console.error('Failed to fetch historial médico:', error);
+    throw error;
+  }
+};
+
+// Obtener información del médico
+export const getMedicos = async (token) => {
+  setAuthToken(token);
+  try {
+    const response = await api.get('/medico/getMedicos');
+    return response.data;
+  } catch (error) {
+    console.error('The list of doctors could not be retrieved.', error);
     throw error;
   }
 };

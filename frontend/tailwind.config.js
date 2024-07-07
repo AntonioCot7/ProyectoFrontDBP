@@ -9,7 +9,8 @@ module.exports = {
         customBlue: '#2670BA',
         customGreen: '#379333',
         customGrey: '#D9D9D9',
-        customSkyBlue: '#60ADAD'
+        customSkyBlue: '#60ADAD',
+        customBlack: '#3C3C3C'
       },
     },
   },
