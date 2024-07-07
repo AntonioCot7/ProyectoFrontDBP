@@ -54,10 +54,11 @@ const PacienteHistorial = () => {
                         {historial.length > 0 ? (
                             historial.map((historialM) => (
                                 <div key={historialM.id} className="flex bg-black text-white p-4 rounded-lg shadow-md mb-4 items-center">
-                                    <img src={Clock} alt="Tratamiento" className="h-12 w-12 mr-4" />
+                                    <img src={Clock} alt="Tratamiento" className="h-12 w-18 mr-4" />
                                     <div className="flex-grow">
                                         <h3 className="text-lg font-bold">Fecha: {format(new Date(historialM.fecha), 'dd MMMM, yyyy h:mm a', { locale })}</h3>
-                                        <p className="text-sm"><strong>Descripción:</strong> {historialM.descripcion}</p>
+                                        <p><strong>Descripción:</strong></p>
+                                        <p className="text-sm whitespace-pre-wrap">{historialM.descripcion}</p>
                                     </div>
                                 </div>
                             ))

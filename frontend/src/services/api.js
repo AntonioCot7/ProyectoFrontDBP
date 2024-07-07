@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 
-const API_BASE_URL = 'http://34.229.161.230:8080';
+const API_BASE_URL = 'http://3.84.251.135:8080';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -121,6 +121,53 @@ export const getTratamientos = async (pacienteId, token) => {
   }
 };
 
+export const getTratamientoInfo = async (pacienteId, token) => {
+  setAuthToken(token);
+  try {
+    const response = await api.get(`/tratamiento/getTratamientos/${pacienteId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch tratamientos:', error);
+    throw error;
+  }
+};
+
+// Actualizar tratamiento 
+export const updateTratamientoInfo = async (id, tratamientoInfo, token) => {
+  setAuthToken(token);
+  try {
+    const response = await api.put(`/tratamiento/${id}`, tratamientoInfo);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to update tratamiento info:', error);
+    throw error;
+  }
+};
+
+// Crear tratamiento
+export const addTratamiento = async (tratamientoInfo, token) => {
+  setAuthToken(token);
+  try {
+    const response = await api.post(`/tratamiento/addTratamiento`, tratamientoInfo);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to create tratamiento info:', error);
+    throw error;
+  }
+};
+
+// Eliminar tratamiento
+export const deleteTratamiento = async (id, token) => {
+  setAuthToken(token);
+  try {
+    const response = await api.delete(`/tratamiento/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to delete tratamiento info:', error);
+    throw error;
+  }
+};
+
 // Obtener Historial
 export const getHistorial = async (pacienteId, token) => {
   setAuthToken(token);
@@ -132,3 +179,29 @@ export const getHistorial = async (pacienteId, token) => {
     throw error;
   }
 };
+
+// Obtener pacientes
+export const getPacientes = async (token) => {
+  setAuthToken(token);
+  try {
+    const response = await api.get(`/paciente/getPacientes`);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch pacientes:', error);
+    throw error;
+  }
+};
+
+/*
+// Obtener pacientes por medico
+export const getPacientesByMedico = async (id, token) => {
+  setAuthToken(token);
+  try {
+    const response = await api.get(`/paciente/pacientes_medico/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch pacientes by medico:', error);
+    throw error;
+  }
+};
+*/

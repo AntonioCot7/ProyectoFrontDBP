@@ -9,7 +9,9 @@ import MedicoCuenta from './pages/MedicoCuenta';
 import PacienteEdit from './pages/PacienteEdit';
 import MedicoEdit from './pages/MedicoEdit';
 import PacienteTratamientos from './pages/PacienteTratamientos';
+import MedicoTratamientosEdit from './pages/MedicoTratamientosEdit';
 import PacienteHistorial from './pages/PacienteHistorial';
+import MedicoTratamientos from './pages/MedicoTratamientos';
 import './index.css';
 
 function App() {
@@ -25,9 +27,11 @@ function App() {
           <Route path="/auth/Dashboard/Medico/Cuenta" element={<MedicoCuenta />} />
           <Route path="/Dashboard/Paciente/Tratamientos" element={<PacienteTratamientos />} />
           <Route path="/Dashboard/Paciente/Historial" element={<PacienteHistorial />} />
+          <Route path="/Dashboard/Medico/Tratamientos" element={<MedicoTratamientos />} />
           <Route path="/auth/Dashboard/Paciente/Cuenta/Edit" element={<PacienteEdit />} />
           <Route path="/auth/Dashboard/Medico/Cuenta/Edit" element={<MedicoEdit />} />
           <Route path="/auth/Dashboard/Paciente/Tratamientos" element={<PacienteTratamientos />} />
+          <Route path="/auth/Dashboard/Medico/Tratamientos/Edit/:id" element={<MedicoTratamientosEdit />} />
           <Route path="/auth/Dashboard/Paciente/HistorialMedico" element={<PacienteHistorial />} />
         </Routes>
       </div>

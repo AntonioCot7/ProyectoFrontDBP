@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { getUserRole, getTratamientos, getPacienteInfo } from '../services/api'; // Importar la nueva función
+import { getTratamientos, getPacienteInfo } from '../services/api'; // Importar la nueva función
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
-import UserIcon from '../assets/UserIcon.png'; // Asegúrate de tener esta imagen en la carpeta correcta
 import Pencil from '../assets/Pencil.png'; // Asegúrate de tener esta imagen en la carpeta correcta
 import medicine from '../assets/medicine.png'; // Imagen principal bajo el texto de bienvenida
+import { useNavigate } from 'react-router-dom';
 
 const PacienteTratamientos = () => {
     const [userInfo, setUserInfo] = useState(null);
     const [tratamientos, setTratamientos] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUserInfo = async () => {
@@ -55,12 +56,9 @@ const PacienteTratamientos = () => {
                                     <img src={medicine} alt="Tratamiento" className="h-12 w-12 mr-4" />
                                     <div className="flex-grow">
                                         <h3 className="text-lg font-bold">Nombre: {tratamiento.nombreTratamiento}</h3>
-                                        <p className="text-sm"><strong>Descripción:</strong> {tratamiento.descripcion}</p>
+                                        <p><strong>Descripción:</strong></p>
+                                        <p className="text-sm whitespace-pre-wrap">{tratamiento.descripcion}</p>
                                     </div>
-                                    <button className="bg-customGreen text-white px-4 py-2 rounded-lg">
-                                        <img src={Pencil} alt="Editar" className="h-4 w-4 mr-2 inline" />
-                                        Editar
-                                    </button>
                                 </div>
                             ))
                         ) : (
