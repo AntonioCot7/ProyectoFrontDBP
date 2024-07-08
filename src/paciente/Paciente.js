@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, RefreshControl } from 'react-native';
-import { getPacienteInfo } from '../api'; // Asegúrate de que la ruta sea correcta
+import { View, Text, StyleSheet, TouchableOpacity, Alert, ScrollView, RefreshControl, Image } from 'react-native';
+import { getPacienteInfo } from '../api';
 import * as SecureStore from 'expo-secure-store';
 import { useNavigation } from '@react-navigation/native';
-import { Accelerometer } from 'expo-sensors';
 
 const Paciente = () => {
   const [userInfo, setUserInfo] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
-  const [subscription, setSubscription] = useState(null);
-  const [lastUpdateTime, setLastUpdateTime] = useState(0);
   const navigation = useNavigation();
 
   const fetchUserInfo = async () => {
@@ -21,6 +18,7 @@ const Paciente = () => {
       }
     } catch (error) {
       console.error('Error fetching user info:', error);
+      Alert.alert('Error', 'Error fetching user info');
     }
   };
 
@@ -38,37 +36,17 @@ const Paciente = () => {
     navigation.navigate('PacienteEdit');
   };
 
-  const handleNavigate = (route) => {
-    navigation.navigate(route);
+  const handleHistorial = () => {
+    navigation.navigate('PacienteHistorial');
   };
 
-  // Funciones del acelerómetro
-  const _subscribe = () => {
-    setSubscription(
-      Accelerometer.addListener(accelerometerData => {
-        const currentTime = Date.now();
-        if (
-          (Math.abs(accelerometerData.x) > 1.5 || 
-          Math.abs(accelerometerData.y) > 1.5 || 
-          Math.abs(accelerometerData.z) > 1.5) &&
-          currentTime - lastUpdateTime > 5000 // 5 segundos
-        ) {
-          setLastUpdateTime(currentTime);
-          onRefresh();
-        }
-      })
-    );
+  const handleTratamientos = () => {
+    navigation.navigate('PacienteTratamientos');
   };
 
-  const _unsubscribe = () => {
-    subscription && subscription.remove();
-    setSubscription(null);
+  const handleConsulta = () => {
+    navigation.navigate('PacienteConsulta');
   };
-
-  useEffect(() => {
-    _subscribe();
-    return () => _unsubscribe();
-  }, []);
 
   return (
     <View style={styles.container}>
@@ -96,20 +74,21 @@ const Paciente = () => {
             </View>
           </View>
           <TouchableOpacity style={styles.editButton} onPress={handleEdit}>
-            <Image source={require('../../img/Pencil.png')} style={styles.editIcon} />
             <Text style={styles.editButtonText}>Editar</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.routeButton} onPress={() => handleNavigate('PacienteConsulta')}>
-            <Text style={styles.routeButtonText}>Ir a Consulta</Text>
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.historialButton} onPress={handleHistorial}>
+            <Text style={styles.historialButtonText}>Ver Historial Médico</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.historialButton} onPress={handleTratamientos}>
+            <Text style={styles.historialButtonText}>Ver Tratamientos</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.historialButton} onPress={handleConsulta}>
+            <Text style={styles.historialButtonText}>Ver Consulta</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
-      <TouchableOpacity style={styles.historialButton} onPress={() => handleNavigate('PacienteHistorial')}>
-        <Text style={styles.historialButtonText}>Ver Historial Médico</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.tratamientosButton} onPress={() => handleNavigate('PacienteTratamientos')}>
-        <Text style={styles.tratamientosButtonText}>Ver Tratamientos</Text>
-      </TouchableOpacity>
     </View>
   );
 };
@@ -117,23 +96,16 @@ const Paciente = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F7FFF7',
-    justifyContent: 'center',
+    backgroundColor: '#ffffff',
   },
   header: {
-    backgroundColor: '#2D6A4F',
-    paddingVertical: 10,
-    paddingHorizontal: 10,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: '#4CAF50',
+    padding: 20,
   },
   headerText: {
     fontSize: 24,
     color: 'white',
     textAlign: 'center',
-    fontWeight: 'bold',
   },
   content: {
     padding: 20,
@@ -146,12 +118,9 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   mainImage: {
-    width: 120,
-    height: 120,
+    width: 150,
+    height: 150,
     resizeMode: 'contain',
-    borderRadius: 60,
-    borderColor: '#95D5B2',
-    borderWidth: 2,
   },
   infoContainer: {
     backgroundColor: '#FFFFFF',
@@ -174,9 +143,6 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     marginRight: 20,
-    borderRadius: 40,
-    borderColor: '#95D5B2',
-    borderWidth: 2,
   },
   userDetails: {
     flex: 1,
@@ -192,9 +158,7 @@ const styles = StyleSheet.create({
     color: '#555',
   },
   editButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#2D6A4F',
+    backgroundColor: '#4CAF50',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
@@ -205,23 +169,20 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 2,
     marginBottom: 10,
-  },
-  editIcon: {
-    width: 20,
-    height: 20,
-    marginRight: 10,
-    tintColor: 'white',
   },
   editButtonText: {
     color: 'white',
     fontWeight: 'bold',
   },
-  routeButton: {
-    backgroundColor: '#2D6A4F',
+  buttonContainer: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  historialButton: {
+    backgroundColor: '#4CAF50',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
-    alignSelf: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
@@ -229,34 +190,8 @@ const styles = StyleSheet.create({
     elevation: 2,
     marginBottom: 10,
   },
-  routeButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
-  historialButton: {
-    backgroundColor: '#2D6A4F',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    alignItems: 'center',
-    margin: 20,
-  },
   historialButtonText: {
     color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  tratamientosButton: {
-    backgroundColor: '#2D6A4F',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    alignItems: 'center',
-    margin: 20,
-  },
-  tratamientosButtonText: {
-    color: 'white',
-    fontSize: 18,
     fontWeight: 'bold',
   },
 });

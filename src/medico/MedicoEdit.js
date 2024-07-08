@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, Button, Alert, BackHandler } from 'react-native';
-import { updatePacienteInfo, getPacienteInfo, deletePaciente } from '../api';
+import { View, Text, TextInput, StyleSheet, Button, Alert, BackHandler, Image, TouchableOpacity } from 'react-native';
+import { updateMedicoInfo, getMedicoInfo, deleteMedico } from '../api'; // Ensure the path is correct
 import * as SecureStore from 'expo-secure-store';
 import { useNavigation } from '@react-navigation/native';
+import UserIcon from '../../img/UserIcon.png'; // Ensure this image is in the correct folder
 
-const PacienteEdit = () => {
+const MedicoEdit = () => {
   const [userInfo, setUserInfo] = useState({
     nombre: '',
     apellido: '',
-    email: '',
+    especialidad: '',
     telefono: '',
     edad: '',
   });
@@ -19,7 +20,7 @@ const PacienteEdit = () => {
       try {
         const token = await SecureStore.getItemAsync('token');
         if (token) {
-          const data = await getPacienteInfo(token);
+          const data = await getMedicoInfo(token);
           setUserInfo(data);
         }
       } catch (error) {
@@ -42,9 +43,9 @@ const PacienteEdit = () => {
     try {
       const token = await SecureStore.getItemAsync('token');
       if (token) {
-        await updatePacienteInfo(userInfo.id, userInfo, token);
+        await updateMedicoInfo(userInfo.id, userInfo, token);
         Alert.alert('Perfil actualizado', 'Tu perfil ha sido actualizado exitosamente');
-        navigation.goBack(); // Vuelve a la pantalla anterior
+        navigation.goBack(); // Go back to the previous screen
       }
     } catch (error) {
       console.error('Error actualizando el perfil:', error);
@@ -56,7 +57,7 @@ const PacienteEdit = () => {
     try {
       const token = await SecureStore.getItemAsync('token');
       if (token) {
-        await deletePaciente(userInfo.id, token);
+        await deleteMedico(userInfo.id, token);
         Alert.alert(
           'Perfil eliminado',
           'Tu perfil ha sido eliminado exitosamente',
@@ -65,7 +66,7 @@ const PacienteEdit = () => {
               text: 'OK',
               onPress: () => {
                 setTimeout(() => {
-                  BackHandler.exitApp(); // Cierra la aplicación después de 5 segundos
+                  BackHandler.exitApp(); // Close the app after 5 seconds
                 }, 5000);
               }
             }
@@ -95,9 +96,9 @@ const PacienteEdit = () => {
       />
       <TextInput
         style={styles.input}
-        placeholder="Email"
-        value={userInfo.email}
-        onChangeText={(value) => handleInputChange('email', value)}
+        placeholder="Especialidad"
+        value={userInfo.especialidad}
+        onChangeText={(value) => handleInputChange('especialidad', value)}
       />
       <TextInput
         style={styles.input}
@@ -112,7 +113,17 @@ const PacienteEdit = () => {
         onChangeText={(value) => handleInputChange('edad', value)}
       />
       <Button title="Actualizar" onPress={handleUpdate} />
-      <Button title="Eliminar Perfil" onPress={handleDelete} color="red" />
+      <TouchableOpacity onPress={handleDelete} style={styles.deleteButton}>
+        <Text style={styles.buttonText}>Eliminar</Text>
+      </TouchableOpacity>
+      <View style={styles.preview}>
+        <Image source={UserIcon} style={styles.image} />
+        <Text style={styles.infoText}><Text style={styles.bold}>Nombre:</Text> {userInfo.nombre}</Text>
+        <Text style={styles.infoText}><Text style={styles.bold}>Apellido:</Text> {userInfo.apellido}</Text>
+        <Text style={styles.infoText}><Text style={styles.bold}>Especialidad:</Text> {userInfo.especialidad}</Text>
+        <Text style={styles.infoText}><Text style={styles.bold}>Teléfono:</Text> {userInfo.telefono}</Text>
+        <Text style={styles.infoText}><Text style={styles.bold}>Edad:</Text> {userInfo.edad}</Text>
+      </View>
     </View>
   );
 };
@@ -139,6 +150,36 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 5,
   },
+  deleteButton: {
+    marginTop: 20,
+    backgroundColor: '#FF6B6B',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#fff',
+  },
+  preview: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  image: {
+    height: 100,
+    width: 100,
+    marginBottom: 20,
+  },
+  infoText: {
+    fontSize: 16,
+    marginBottom: 5,
+    color: '#333',
+    fontFamily: 'Helvetica',
+  },
+  bold: {
+    fontWeight: 'bold',
+    color: '#555',
+  },
 });
 
-export default PacienteEdit;
+export default MedicoEdit;

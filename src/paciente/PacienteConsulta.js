@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal, Alert } from 'react-native';
-import { symptomList, diseaseDatabase } from './Data'; // Asegúrate de tener los datos correctos
+import { symptomList, diseaseDatabase } from './Data';
 
 const WarningDialog = ({ visible, onClose }) => {
   return (
@@ -100,7 +100,6 @@ const PacienteConsulta = () => {
   const symptomWeights = {
     "fiebre": 1.2,
     "tos": 1.1,
-    // Agrega pesos a otros síntomas si es necesario
   };
 
   const handlePredict = (symptoms) => {

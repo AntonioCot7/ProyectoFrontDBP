@@ -9,9 +9,12 @@ import PacienteEdit from './src/paciente/PacienteEdit';
 import PacienteConsulta from './src/paciente/PacienteConsulta';
 import PacienteHistorial from './src/paciente/PacienteHistorial';
 import PacienteTratamientos from './src/paciente/PacienteTratamientos';
-import SensorScreen from './src/paciente/SensorScreen';
 import Medico from './src/medico/Medico';
-
+import MedicoEdit from './src/medico/MedicoEdit';
+import MedicoHistorial from './src/medico/MedicoHistorial';
+import MedicoHistorialEdit from './src/medico/MedicoHistorialEdit';
+import MedicoTratamientos from './src/medico/MedicoTratamientos';
+import MedicoTratamientosEdit from './src/medico/MedicoTratamientosEdit';
 const Stack = createStackNavigator();
 
 const AuthStack = ({ setIsLoggedIn }) => (
@@ -30,7 +33,6 @@ const PacienteStack = () => (
     <Stack.Screen name="PacienteConsulta" component={PacienteConsulta} />
     <Stack.Screen name="PacienteHistorial" component={PacienteHistorial} />
     <Stack.Screen name="PacienteTratamientos" component={PacienteTratamientos} />
-    <Stack.Screen name="SensorScreen" component={SensorScreen} />
     <Stack.Screen name="Logout" component={Logout} />
   </Stack.Navigator>
 );
@@ -38,9 +40,16 @@ const PacienteStack = () => (
 const MedicoStack = () => (
   <Stack.Navigator>
     <Stack.Screen name="Medico" component={Medico} />
+    <Stack.Screen name="MedicoEdit" component={MedicoEdit} />
+    <Stack.Screen name="MedicoHistorial" component={MedicoHistorial} />
+    <Stack.Screen name="MedicoHistorialEdit" component={MedicoHistorialEdit} />
+    <Stack.Screen name="MedicoTratamientos" component={MedicoTratamientos} />
+    <Stack.Screen name="MedicoTratamientosEdit" component={MedicoTratamientosEdit} />
     <Stack.Screen name="Logout" component={Logout} />
+
   </Stack.Navigator>
 );
+
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

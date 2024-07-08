@@ -1,40 +1,90 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
-import { getMedicoInfo } from '../api'; // Asegúrate de que la ruta sea correcta
+import { View, Text, StyleSheet, TouchableOpacity, Alert, ScrollView, RefreshControl, Image } from 'react-native';
+import { getMedicoInfo } from '../api';
 import * as SecureStore from 'expo-secure-store';
 import { useNavigation } from '@react-navigation/native';
+import { Accelerometer } from 'expo-sensors';
 
 const Medico = () => {
   const [userInfo, setUserInfo] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
+  const [subscription, setSubscription] = useState(null);
+  const [lastUpdateTime, setLastUpdateTime] = useState(0);
   const navigation = useNavigation();
 
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const token = await SecureStore.getItemAsync('token');
-        if (token) {
-          const data = await getMedicoInfo();
-          setUserInfo(data);
-        }
-      } catch (error) {
-        console.error('Error fetching user info:', error);
-        Alert.alert('Error', 'Error fetching user info');
+  const fetchUserInfo = async () => {
+    try {
+      const token = await SecureStore.getItemAsync('token');
+      if (token) {
+        const data = await getMedicoInfo();
+        setUserInfo(data);
       }
-    };
+    } catch (error) {
+      console.error('Error fetching user info:', error);
+      Alert.alert('Error', 'Error fetching user info');
+    }
+  };
 
+  useEffect(() => {
     fetchUserInfo();
   }, []);
 
-  const handleEdit = () => {
-    navigation.navigate('MedicoEdit'); // Asegúrate de tener esta ruta configurada en tu navegación
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchUserInfo();
+    setRefreshing(false);
   };
+
+  const handleEdit = () => {
+    navigation.navigate('MedicoEdit');
+  };
+
+  const handleHistorial = () => {
+    navigation.navigate('MedicoHistorial');
+  };
+
+  const handleTratamientos = () => {
+    navigation.navigate('MedicoTratamientos');
+  };
+
+  const _subscribe = () => {
+    setSubscription(
+      Accelerometer.addListener(accelerometerData => {
+        const currentTime = Date.now();
+        if (
+          (Math.abs(accelerometerData.x) > 1.5 || 
+          Math.abs(accelerometerData.y) > 1.5 || 
+          Math.abs(accelerometerData.z) > 1.5) &&
+          currentTime - lastUpdateTime > 5000
+        ) {
+          setLastUpdateTime(currentTime);
+          onRefresh();
+        }
+      })
+    );
+  };
+
+  const _unsubscribe = () => {
+    subscription && subscription.remove();
+    setSubscription(null);
+  };
+
+  useEffect(() => {
+    _subscribe();
+    return () => _unsubscribe();
+  }, []);
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerText}>¡Bienvenido de vuelta! 👨‍⚕️</Text>
       </View>
-      <View style={styles.content}>
+      <ScrollView 
+        contentContainerStyle={styles.content}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         <View style={styles.imageContainer}>
           <Image source={require('../../img/MedicoImagen.png')} style={styles.mainImage} />
         </View>
@@ -42,20 +92,27 @@ const Medico = () => {
           <View style={styles.userInfo}>
             <Image source={require('../../img/UserIcon.png')} style={styles.userIcon} />
             <View style={styles.userDetails}>
-              <Text><Text style={styles.bold}>Nombre:</Text> {userInfo?.nombre}</Text>
-              <Text><Text style={styles.bold}>Apellido:</Text> {userInfo?.apellido}</Text>
-              <Text><Text style={styles.bold}>Email:</Text> {userInfo?.email}</Text>
-              <Text><Text style={styles.bold}>Teléfono:</Text> {userInfo?.telefono}</Text>
-              <Text><Text style={styles.bold}>Edad:</Text> {userInfo?.edad}</Text>
-              <Text><Text style={styles.bold}>Especialidad:</Text> {userInfo?.especialidad}</Text>
+              <Text style={styles.infoText}><Text style={styles.bold}>Nombre:</Text> {userInfo?.nombre}</Text>
+              <Text style={styles.infoText}><Text style={styles.bold}>Apellido:</Text> {userInfo?.apellido}</Text>
+              <Text style={styles.infoText}><Text style={styles.bold}>Email:</Text> {userInfo?.email}</Text>
+              <Text style={styles.infoText}><Text style={styles.bold}>Teléfono:</Text> {userInfo?.telefono}</Text>
+              <Text style={styles.infoText}><Text style={styles.bold}>Edad:</Text> {userInfo?.edad}</Text>
+              <Text style={styles.infoText}><Text style={styles.bold}>Especialidad:</Text> {userInfo?.especialidad}</Text>
             </View>
           </View>
           <TouchableOpacity style={styles.editButton} onPress={handleEdit}>
-            <Image source={require('../../img/Pencil.png')} style={styles.editIcon} />
             <Text style={styles.editButtonText}>Editar</Text>
           </TouchableOpacity>
         </View>
-      </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.historialButton} onPress={handleHistorial}>
+            <Text style={styles.historialButtonText}>Ver Historial Médico</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.historialButton} onPress={handleTratamientos}>
+            <Text style={styles.historialButtonText}>Ver Tratamientos</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -75,15 +132,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   content: {
-    flex: 1,
     padding: 20,
-    flexDirection: 'column',
-    justifyContent: 'space-between',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexGrow: 1,
   },
   imageContainer: {
-    flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    marginVertical: 5,
   },
   mainImage: {
     width: 150,
@@ -91,15 +147,20 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   infoContainer: {
-    flex: 1,
-    justifyContent: 'center',
+    backgroundColor: '#FFFFFF',
+    padding: 20,
+    borderRadius: 15,
+    width: '100%',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 1,
+    alignItems: 'center',
   },
   userInfo: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f0f0f0',
-    padding: 15,
-    borderRadius: 10,
     marginBottom: 20,
   },
   userIcon: {
@@ -110,22 +171,50 @@ const styles = StyleSheet.create({
   userDetails: {
     flex: 1,
   },
+  infoText: {
+    fontSize: 16,
+    marginBottom: 5,
+    color: '#333',
+    fontFamily: 'Helvetica',
+  },
   bold: {
     fontWeight: 'bold',
+    color: '#555',
   },
   editButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
     backgroundColor: '#1E6793',
-    padding: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     borderRadius: 5,
-  },
-  editIcon: {
-    width: 20,
-    height: 20,
-    marginRight: 10,
+    alignSelf: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 2,
+    marginBottom: 10,
   },
   editButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  buttonContainer: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  historialButton: {
+    backgroundColor: '#1E6793',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 2,
+    marginBottom: 10,
+  },
+  historialButtonText: {
     color: 'white',
     fontWeight: 'bold',
   },
