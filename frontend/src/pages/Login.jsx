@@ -1,17 +1,31 @@
 import React from 'react';
 import LoginForm from '../components/LoginForm';
 import { login } from '../services/api';
+<<<<<<< HEAD
+=======
+import { jwtDecode } from 'jwt-decode';
+>>>>>>> 230f4d32beeac1bc86dbdb9bb42319fa767a7828
 
 const Login = () => {
   const handleLogin = async (email, password) => {
     try {
       const response = await login(email, password);
       const token = response.token;
+      console.log(response);
       localStorage.setItem('token', token);
+<<<<<<< HEAD
       localStorage.setItem('role', response.role);
 
       // Redirigir según el rol
       window.location.href = '/auth/login';
+=======
+
+      const decodedToken = jwtDecode(token);
+      const role = decodedToken.role;
+      console.log(role);
+      localStorage.setItem('role', role);
+      return { role };  // Devolver el rol para manejar la redirección
+>>>>>>> 230f4d32beeac1bc86dbdb9bb42319fa767a7828
     } catch (error) {
       console.error('Error al iniciar sesión:', error.response || error.message || error);
     }

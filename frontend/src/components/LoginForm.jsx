@@ -4,9 +4,17 @@ const LoginForm = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onLogin(email, password);
+    const response = await onLogin(email, password);
+
+    // Redirigir según el rol
+    const role = response.role;
+    if (role === 'ROLE_PACIENTE') {
+      window.location.href = '/auth/Dashboard/Paciente/Cuenta';
+    } else if (role === 'ROLE_MEDICO') {
+      window.location.href = '/auth/Dashboard/Medico/Cuenta';
+    }
   };
 
   return (
@@ -47,9 +55,9 @@ const LoginForm = ({ onLogin }) => {
       <button
         type="button"
         className="w-full bg-green-600 text-white py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 hover:bg-green-700 transition duration-200"
-        onClick={() => window.location.href = '/auth/register'}
+        onClick={() => window.location.href = '/register'}
       >
-        Registro
+        Registrarse
       </button>
     </form>
   );
