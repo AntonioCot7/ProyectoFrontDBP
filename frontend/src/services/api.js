@@ -2,11 +2,7 @@ import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 
-<<<<<<< HEAD
 const API_BASE_URL = 'http://localhost:8080';
-=======
-const API_BASE_URL = 'http://54.162.106.146:8080';
->>>>>>> 343c15157bc1e3cb7d4cf0e98f2a1f6a91e0147c
 
 const api = axios.create({
   baseURL: API_BASE_URL,

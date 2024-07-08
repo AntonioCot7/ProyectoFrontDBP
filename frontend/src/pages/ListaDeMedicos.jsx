@@ -13,6 +13,7 @@ const MedicoLista = () => {
             try {
                 const token = localStorage.getItem('token');
                 const medicosData = await getMedicos(token, page);
+                console.log(medicosData)
                 setMedicos((prevMedicos) => [...prevMedicos, ...medicosData]);
             } catch (error) {
                 console.error('The list of doctors could not be retrieved.', error);

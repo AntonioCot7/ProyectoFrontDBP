@@ -17,6 +17,7 @@ const MedicoCuenta = () => {
         const token = localStorage.getItem('token');
         if (token) {
           const data = await getMedicoInfo(token);
+          console.log(data)
           setUserInfo(data);
         }
       } catch (error) {

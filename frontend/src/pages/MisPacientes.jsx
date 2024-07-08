@@ -51,9 +51,9 @@ const MisPacientes = () => {
 
     return (
         <div>
-            <Header bgColor="bg-customGreen" />
+            <Header bgColor="bg-customBlue" />
             <div className="flex">
-                <Sidebar role="Medico" bgColor="bg-gray-300" textColor="text-black" hoverColor="hover:bg-customGreen" />
+                <Sidebar role="Medico" bgColor="bg-gray-300" textColor="text-black" hoverColor="hover:bg-customBlue" />
                 <div className="flex-grow p-6 bg-white">
                     <div className="mt-6 bg-gray-300 p-4 rounded-lg shadow-md">
                         <h2 className="text-2xl font-bold mb-4">Mis Pacientes</h2>

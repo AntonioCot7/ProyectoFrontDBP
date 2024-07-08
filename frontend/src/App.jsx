@@ -13,12 +13,12 @@ import PacienteTratamientos from './pages/PacienteTratamientos';
 import MedicoTratamientosEdit from './pages/MedicoTratamientosEdit';
 import PacienteHistorial from './pages/PacienteHistorial';
 import MedicoTratamientos from './pages/MedicoTratamientos';
-import MedicoTratamientosEdit from './pages/MedicoTratamientosEdit';
 import MedicoHistorial from './pages/MedicoHistorial';
 import MedicoHistorialEdit from './pages/MedicoHistorialEdit';
 
 import ListaDeMedicos from './pages/ListaDeMedicos';
 import MisMedicos from './pages/MisMedicos';
+import MisPacientes from './pages/MisPacientes';
 import MiRuta from './pages/MiRuta';
 import Mapa from './pages/Mapa';
 import ErrorPage from './pages/ErrorPage';
@@ -40,7 +40,7 @@ function App() {
           <Route path="/Dashboard/Medico/Tratamientos" element={<MedicoTratamientos />} />
           <Route path="/Dashboard/Medico/Historial" element={<MedicoHistorial />} />
           <Route path="/Dashboard/Medico/Historial/Edit/:id" element={<MedicoHistorialEdit />} />
-          <Route path="/Dashboard/Medico/MisPacientes" element={<MisPacientes />} />
+          <Route path="/auth/Dashboard/Medico/MisPacientes" element={<MisPacientes />} />
           <Route path="/auth/Dashboard/Paciente/Cuenta/Edit" element={<PacienteEdit />} />
           <Route path="/auth/Dashboard/Medico/Cuenta/Edit" element={<MedicoEdit />} />
           <Route path="/auth/Dashboard/Paciente/Tratamientos" element={<PacienteTratamientos />} />

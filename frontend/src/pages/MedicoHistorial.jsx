@@ -124,24 +124,14 @@ const MedicoHistorial = () => {
     };
 
     const handleEdit = (id) => {
-<<<<<<< HEAD
-        navigate(`/Dashboard/Medico/Historial/Edit/${id}`);
-=======
         navigate(`/auth/Dashboard/Medico/Historial/Edit/${id}`);
->>>>>>> 343c15157bc1e3cb7d4cf0e98f2a1f6a91e0147c
     };
 
     return (
         <div>
-<<<<<<< HEAD
-            <Header bgColor="bg-customGreen" />
-            <div className="flex">
-                <Sidebar role="Medico" bgColor="bg-gray-300" textColor="text-black" hoverColor="hover:bg-customGreen" />
-=======
             <Header bgColor="bg-customBlue" />
             <div className="flex">
                 <Sidebar role="Medico" bgColor="bg-gray-300" textColor="text-black" hoverColor="hover:bg-customBlue" />
->>>>>>> 343c15157bc1e3cb7d4cf0e98f2a1f6a91e0147c
                 <div className="flex-grow p-6 bg-white">
                     <div className="mt-6 bg-gray-100 p-4 rounded-lg shadow-md flex">
                         <div className="w-1/2 mr-4">
@@ -176,11 +166,7 @@ const MedicoHistorial = () => {
                                     className="w-full mb-4 p-2 border rounded"
                                     rows="10"
                                 />
-<<<<<<< HEAD
-                                <button type="submit" className="w-full bg-customGreen text-white py-2 rounded">
-=======
                                 <button type="submit" className="w-full bg-blue-500 text-white px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 hover:bg-blue-700 transition duration-200">
->>>>>>> 343c15157bc1e3cb7d4cf0e98f2a1f6a91e0147c
                                     Confirmar
                                 </button>
                             </form>
@@ -190,22 +176,14 @@ const MedicoHistorial = () => {
                             {historiales.length > 0 ? (
                                 historiales.map((historial) => (
                                     <div key={historial.id} className="flex bg-black text-white p-4 rounded-lg shadow-md mb-4 items-start">
-<<<<<<< HEAD
-                                        <img src={Clock} alt="Tratamiento" className="h-12 w-12 mr-4" />
-=======
                                         <img src={Clock} alt="Tratamiento" className="h-12 w-16 mr-2" />
->>>>>>> 343c15157bc1e3cb7d4cf0e98f2a1f6a91e0147c
                                         <div className="flex-grow">
                                             <h3 className="text-lg font-bold">Fecha: {format(new Date(historial.fecha), 'dd MMMM, yyyy h:mm a', { locale })}</h3>
                                             <p><strong>Descripción:</strong></p>
                                             <p className="text-sm whitespace-pre-wrap">{historial.descripcion}</p>
                                         </div>
                                         <div>
-<<<<<<< HEAD
-                                        <button onClick={() => handleEdit(historial.id)} className="bg-customGreen text-white px-4 py-2 rounded-lg">
-=======
                                         <button onClick={() => handleEdit(historial.id)} className="bg-blue-500 text-white px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 hover:bg-blue-700 transition duration-200">
->>>>>>> 343c15157bc1e3cb7d4cf0e98f2a1f6a91e0147c
                                             <img src={Pencil} alt="Editar" className="h-4 w-4 mr-2 inline" />
                                             Editar
                                         </button>
@@ -215,11 +193,7 @@ const MedicoHistorial = () => {
                             ) : (
                                 <p>No hay tratamientos disponibles.</p>
                             )}
-<<<<<<< HEAD
-                            <button className="mt-4 bg-customGreen text-white px-4 py-2 rounded-lg w-full">
-=======
                             <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-full w-full focus:outline-none focus:ring-2 focus:ring-blue-500 hover:bg-blue-700 transition duration-200">
->>>>>>> 343c15157bc1e3cb7d4cf0e98f2a1f6a91e0147c
                                 Cargar más...
                             </button>
                         </div>
@@ -230,8 +204,4 @@ const MedicoHistorial = () => {
     );
 };
 
-<<<<<<< HEAD
 export default MedicoHistorial;
-=======
-export default MedicoHistorial;
->>>>>>> 343c15157bc1e3cb7d4cf0e98f2a1f6a91e0147c
