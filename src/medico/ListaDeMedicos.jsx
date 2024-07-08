@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { getMedicos, patchMedicoByPacienteId } from '../api'; // Adjust the path as needed
+import { getMedicos, patchMedicoByPacienteId } from '../api'; 
 import * as SecureStore from 'expo-secure-store';
 
 const ListaDeMedicos = () => {
