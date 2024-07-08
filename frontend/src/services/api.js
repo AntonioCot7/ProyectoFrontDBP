@@ -2,7 +2,11 @@ import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 
+<<<<<<< HEAD
 const API_BASE_URL = 'http://localhost:8080';
+=======
+const API_BASE_URL = 'http://54.162.106.146:8080';
+>>>>>>> 343c15157bc1e3cb7d4cf0e98f2a1f6a91e0147c
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -124,6 +128,102 @@ export const updatePacienteInfo = async (id, pacienteInfoDTO, token) => {
   }
 };
 
+
+// Crear Historial
+export const addHistorial = async (historialInfo, token) => {
+  setAuthToken(token);
+  try {
+    const response = await api.post(`/historial`, historialInfo);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to create historial info:', error);
+    throw error;
+  }
+};
+
+// Actualizar historial 
+export const updateHistorialInfo = async (id, historialInfo, token) => {
+  setAuthToken(token);
+  try {
+    const response = await api.put(`/historial/${id}`, historialInfo);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to update historial info:', error);
+    throw error;
+  }
+};
+
+// Obtener pacientes
+export const getPacientes = async (token) => {
+  setAuthToken(token);
+  try {
+    const response = await api.get(`/paciente/getPacientes`);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch pacientes:', error);
+  }
+};
+// Obtener la lista de todos los medicos
+export const getMedicos = async (token) => {
+  setAuthToken(token);
+  try {
+    const response = await api.get('/medico/getMedicos');
+    return response.data;
+  } catch (error) {
+    console.error('The list of doctors could not be retrieved.', error);
+    throw error;
+  }
+};
+
+
+// Obtener pacientes por medico
+export const getPacientesByMedico = async (id, token) => {
+  setAuthToken(token);
+  try {
+    const response = await api.get(`/paciente/pacientes_medico/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch pacientes by medico:', error);
+    throw error;
+  }
+};
+
+// Obtener los médicos asignados a paciente
+export const getMedicoByPacienteId = async (pacienteId,token) => {
+  setAuthToken(token);
+  try {
+    const response = await api.get(`/paciente/medico/${pacienteId}`);
+    return response.data;
+  } catch (error) {
+    console.error('The patient does not have an assigned doctor.', error);
+    throw error;
+  }
+};
+
+// Asignar un médico al paciente
+export const patchMedicoByPacienteId = async (medicoId,token) => {
+  setAuthToken(token);
+  try {
+    const response = await api.patch(`/paciente/addMedico/${medicoId}`);
+    return response.data;
+  } catch (error) {
+    console.error('A doctor could not be assigned to the patient.', error);
+    throw error;
+  }
+};
+
+// Crear ruta
+export const createRuta = async (rutaData, token) => {
+  setAuthToken(token);
+  try {
+    const response = await api.post('/rutas', rutaData);
+    return response.data;
+  } catch (error) {
+    console.error('Error creating route:', error);
+    throw error;
+  }
+};
+
 // Obtener tratamientos del paciente
 export const getTratamientos = async (pacienteId, token) => {
   setAuthToken(token);
@@ -209,85 +309,4 @@ export const getHistorialInfo = async (pacienteId, token) => {
   }
 };
 
-// Crear Historial
-export const addHistorial = async (historialInfo, token) => {
-  setAuthToken(token);
-  try {
-    const response = await api.post(`/historial`, historialInfo);
-    return response.data;
-  } catch (error) {
-    console.error('Failed to create historial info:', error);
-    throw error;
-  }
-};
 
-// Actualizar historial 
-export const updateHistorialInfo = async (id, historialInfo, token) => {
-  setAuthToken(token);
-  try {
-    const response = await api.put(`/historial/${id}`, historialInfo);
-    return response.data;
-  } catch (error) {
-    console.error('Failed to update historial info:', error);
-    throw error;
-  }
-};
-
-// Obtener pacientes
-export const getPacientes = async (token) => {
-  setAuthToken(token);
-  try {
-    const response = await api.get(`/paciente/getPacientes`);
-    return response.data;
-  } catch (error) {
-    console.error('Failed to fetch pacientes:', error);
-  }
-};
-// Obtener la lista de todos los medicos
-export const getMedicos = async (token) => {
-  setAuthToken(token);
-  try {
-    const response = await api.get('/medico/getMedicos');
-    return response.data;
-  } catch (error) {
-    console.error('The list of doctors could not be retrieved.', error);
-    throw error;
-  }
-};
-
-
-// Obtener pacientes por medico
-export const getPacientesByMedico = async (id, token) => {
-  setAuthToken(token);
-  try {
-    const response = await api.get(`/paciente/pacientes_medico/${id}`);
-    return response.data;
-  } catch (error) {
-    console.error('Failed to fetch pacientes by medico:', error);
-    throw error;
-  }
-};
-
-// Obtener los médicos asignados a paciente
-export const getMedicoByPacienteId = async (pacienteId,token) => {
-  setAuthToken(token);
-  try {
-    const response = await api.get(`/paciente/medico/${pacienteId}`);
-    return response.data;
-  } catch (error) {
-    console.error('The patient does not have an assigned doctor.', error);
-    throw error;
-  }
-};
-
-// Asignar un médico al paciente
-export const patchMedicoByPacienteId = async (medicoId,token) => {
-  setAuthToken(token);
-  try {
-    const response = await api.patch(`/paciente/addMedico/${medicoId}`);
-    return response.data;
-  } catch (error) {
-    console.error('A doctor could not be assigned to the patient.', error);
-    throw error;
-  }
-};

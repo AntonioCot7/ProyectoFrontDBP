@@ -53,8 +53,13 @@ const PacienteHistorial = () => {
                         <h2 className="text-2xl font-bold mb-4">Historial Médico</h2>
                         {historial.length > 0 ? (
                             historial.map((historialM) => (
+<<<<<<< HEAD
                                 <div key={historialM.id} className="flex bg-black text-white p-4 rounded-lg shadow-md mb-4 items-center">
                                     <img src={Clock} alt="Tratamiento" className="h-12 w-18 mr-4" />
+=======
+                                <div key={historialM.id} className="flex bg-customBlack text-white p-4 rounded-lg shadow-md mb-4 items-center">
+                                    <img src={Clock} alt="Tratamiento" className="h-12 w-12 mr-4" />
+>>>>>>> 343c15157bc1e3cb7d4cf0e98f2a1f6a91e0147c
                                     <div className="flex-grow">
                                         <h3 className="text-lg font-bold">Fecha: {format(new Date(historialM.fecha), 'dd MMMM, yyyy h:mm a', { locale })}</h3>
                                         <p><strong>Descripción:</strong></p>
@@ -65,7 +70,7 @@ const PacienteHistorial = () => {
                         ) : (
                             <p>No hay Historial Médico.</p>
                         )}
-                        <button className="mt-4 bg-customGreen text-white px-4 py-2 rounded-lg w-full">
+                        <button className="mt-4 bg-customGreen text-white px-4 py-2 rounded-full w-full focus:outline-none focus:ring-2 focus:ring-green-500 hover:bg-green-700 transition duration-200">
                             Cargar más...
                         </button>
                     </div>

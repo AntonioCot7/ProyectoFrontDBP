@@ -76,6 +76,7 @@ const MedicoHistorialEdit = () => {
 
   return (
     <div>
+<<<<<<< HEAD
       <Header bgColor="bg-customGreen" />
       <div className="flex">
         <Sidebar role="Paciente" bgColor="bg-gray-300" textColor="text-black" hoverColor="hover:bg-customGreen" />
@@ -85,6 +86,17 @@ const MedicoHistorialEdit = () => {
                         <div className="flex bg-black text-white p-4 rounded-lg shadow-md mb-4 items-center">
                             <div className="flex-grow">
                                 <label className="text-gray-500">Fecha de la consulta</label>
+=======
+      <Header bgColor="bg-customBlue" />
+      <div className="flex">
+        <Sidebar role="Paciente" bgColor="bg-gray-300" textColor="text-black" hoverColor="hover:bg-customBlue" />
+        <div className="flex-grow p-6 bg-white">
+            <div className="mt-6 bg-gray-100 p-4 rounded-lg shadow-md">
+                <h2 className="text-2xl font-bold mb-4">Editar Historial</h2>
+                        <div className="flex bg-customBlack text-white p-4 rounded-lg shadow-md mb-4 items-center">
+                            <div className="flex-grow">
+                                <label className="text-white">Fecha de la consulta</label>
+>>>>>>> 343c15157bc1e3cb7d4cf0e98f2a1f6a91e0147c
                                 <input
                                     type="datetime-local"
                                     name="fecha"
@@ -92,7 +104,11 @@ const MedicoHistorialEdit = () => {
                                     onChange={handleDateChange}
                                     className="w-full mb-4 p-2 border rounded text-gray-500"
                                 />
+<<<<<<< HEAD
                                 <label className="text-gray-500">Descripción</label>
+=======
+                                <label className="text-white">Descripción</label>
+>>>>>>> 343c15157bc1e3cb7d4cf0e98f2a1f6a91e0147c
                                 <textarea
                                     name="descripcion"
                                     value={historialInfo.descripcion}
@@ -102,13 +118,21 @@ const MedicoHistorialEdit = () => {
                                 />
                                 <button
                                     onClick={handleUpdate}
+<<<<<<< HEAD
                                     className="w-full bg-customGreen text-white py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 hover:bg-green-700 transition duration-200"
+=======
+                                    className="w-full bg-blue-500 text-white px-4 py-2 rounded-full w-full focus:outline-none focus:ring-2 focus:ring-blue-500 hover:bg-blue-700 transition duration-200"
+>>>>>>> 343c15157bc1e3cb7d4cf0e98f2a1f6a91e0147c
                                 >
                                 Actualizar
                                 </button>
                             </div>
                         </div>
+<<<<<<< HEAD
                 <button className="mt-4 bg-customGreen text-white px-4 py-2 rounded-lg w-full">
+=======
+                <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500 hover:bg-blue-700 transition duration-200">
+>>>>>>> 343c15157bc1e3cb7d4cf0e98f2a1f6a91e0147c
                     Cargar más...
                 </button>
             </div>
@@ -118,4 +142,8 @@ const MedicoHistorialEdit = () => {
   );
 };
 
+<<<<<<< HEAD
 export default MedicoHistorialEdit;
+=======
+export default MedicoHistorialEdit;
+>>>>>>> 343c15157bc1e3cb7d4cf0e98f2a1f6a91e0147c

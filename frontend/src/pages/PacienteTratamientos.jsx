@@ -52,7 +52,7 @@ const PacienteTratamientos = () => {
                         <h2 className="text-2xl font-bold mb-4">Tratamientos</h2>
                         {tratamientos.length > 0 ? (
                             tratamientos.map((tratamiento) => (
-                                <div key={tratamiento.id} className="flex bg-black text-white p-4 rounded-lg shadow-md mb-4 items-center">
+                                <div key={tratamiento.id} className="flex bg-customBlack text-white p-4 rounded-lg shadow-md mb-4 items-center">
                                     <img src={medicine} alt="Tratamiento" className="h-12 w-12 mr-4" />
                                     <div className="flex-grow">
                                         <h3 className="text-lg font-bold">Nombre: {tratamiento.nombreTratamiento}</h3>
@@ -64,7 +64,7 @@ const PacienteTratamientos = () => {
                         ) : (
                             <p>No hay tratamientos disponibles.</p>
                         )}
-                        <button className="mt-4 bg-customGreen text-white px-4 py-2 rounded-lg w-full">
+                        <button className="mt-4 bg-customGreen text-white px-4 py-2 rounded-full w-full focus:outline-none focus:ring-2 focus:ring-green-500 hover:bg-green-700 transition duration-200">
                             Cargar más...
                         </button>
                     </div>

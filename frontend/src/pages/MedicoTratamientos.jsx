@@ -129,9 +129,15 @@ const MedicoTratamientos = () => {
 
     return (
         <div>
+<<<<<<< HEAD
             <Header bgColor="bg-customGreen" />
             <div className="flex">
                 <Sidebar role="Medico" bgColor="bg-gray-300" textColor="text-black" hoverColor="hover:bg-customGreen" />
+=======
+            <Header bgColor="bg-customBlue" />
+            <div className="flex">
+                <Sidebar role="Medico" bgColor="bg-gray-300" textColor="text-black" hoverColor="hover:bg-customBlue" />
+>>>>>>> 343c15157bc1e3cb7d4cf0e98f2a1f6a91e0147c
                 <div className="flex-grow p-6 bg-white">
                     <div className="mt-6 bg-gray-100 p-4 rounded-lg shadow-md flex">
                         <div className="w-1/2 mr-4">
@@ -166,7 +172,11 @@ const MedicoTratamientos = () => {
                                     className="w-full mb-4 p-2 border rounded"
                                     rows="10"
                                 />
+<<<<<<< HEAD
                                 <button type="submit" className="w-full bg-customGreen text-white py-2 rounded">
+=======
+                                <button type="submit" className="w-full bg-blue-500 text-white px-4 py-2 rounded-full w-full focus:outline-none focus:ring-2 focus:ring-blue-500 hover:bg-blue-700 transition duration-200">
+>>>>>>> 343c15157bc1e3cb7d4cf0e98f2a1f6a91e0147c
                                     Confirmar
                                 </button>
                             </form>
@@ -175,13 +185,18 @@ const MedicoTratamientos = () => {
                             <h2 className="text-2xl font-bold mb-4">Tratamientos</h2>
                             {tratamientos.length > 0 ? (
                                 tratamientos.map((tratamiento) => (
+<<<<<<< HEAD
                                     <div key={tratamiento.id} className="flex bg-black text-white p-4 rounded-lg shadow-md mb-4 items-start">
+=======
+                                    <div key={tratamiento.id} className="flex bg-customBlack text-white p-4 rounded-lg shadow-md mb-4 items-start">
+>>>>>>> 343c15157bc1e3cb7d4cf0e98f2a1f6a91e0147c
                                         <img src={medicine} alt="Tratamiento" className="h-12 w-12 mr-4" />
                                         <div className="flex-grow">
                                             <h3 className="text-lg font-bold">Nombre: {tratamiento.nombreTratamiento}</h3>
                                             <p><strong>Descripción:</strong></p>
                                             <p className="text-sm whitespace-pre-wrap">{tratamiento.descripcion}</p>
                                         </div>
+<<<<<<< HEAD
                                         <div>
                                         <button onClick={() => handleEdit(parseInt(selectedPaciente))} className="bg-customGreen text-white px-4 py-2 rounded-lg">
                                             <img src={Pencil} alt="Editar" className="h-4 w-4 mr-2 inline" />
@@ -196,12 +211,28 @@ const MedicoTratamientos = () => {
                                         </button>
                                         </div>
                                         
+=======
+                                        <div className="flex flex-col space-y-2">
+                                            <button onClick={() => handleEdit(parseInt(selectedPaciente))} className="bg-blue-500 text-white px-4 py-2 rounded-full">
+                                                <img src={Pencil} alt="Editar" className="h-4 w-4 mr-2 inline" />
+                                                Editar
+                                            </button>
+                                            <button onClick={() => handleDelete(tratamiento.id)} className="bg-red-500 text-white px-4 py-2 rounded-full">
+                                                <img src={Trash} alt="Eliminar" className="h-4 w-4 mr-2 inline" />
+                                                Eliminar
+                                            </button>
+                                        </div>
+>>>>>>> 343c15157bc1e3cb7d4cf0e98f2a1f6a91e0147c
                                     </div>
                                 ))
                             ) : (
                                 <p>No hay tratamientos disponibles.</p>
                             )}
+<<<<<<< HEAD
                             <button className="mt-4 bg-customGreen text-white px-4 py-2 rounded-lg w-full">
+=======
+                            <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-full w-full focus:outline-none focus:ring-2 focus:ring-blue-500 hover:bg-blue-700 transition duration-200">
+>>>>>>> 343c15157bc1e3cb7d4cf0e98f2a1f6a91e0147c
                                 Cargar más...
                             </button>
                         </div>
