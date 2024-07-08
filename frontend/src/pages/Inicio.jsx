@@ -5,11 +5,7 @@ const Inicio = () => {
   const navigate = useNavigate();
 
   const handleStart = () => {
-<<<<<<< HEAD
-    navigate('/auth/login');
-=======
     navigate('/login');
->>>>>>> 230f4d32beeac1bc86dbdb9bb42319fa767a7828
   };
 
   return (
